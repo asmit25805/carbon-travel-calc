@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculate your carbon footprint for trips based on transport mode, distance, and fuel type. Perfect for eco-conscious travelers.">
+  <title>Carbon Footprint Travel Calculator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #27ae60;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #219653;
+    }
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: #ecf0f1;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .tips {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: #555;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #777;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 1rem;
+      }
+      h1 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ADSENSE_PLACEHOLDER -->
+  <div class="container">
+    <h1>Carbon Footprint Travel Calculator</h1>
+    <label for="transport">Transport Mode</label>
+    <select id="transport">
+      <option value="car">Car</option>
+      <option value="bus">Bus</option>
+      <option value="train">Train</option>
+      <option value="plane">Plane</option>
+    </select>
+    <label for="distance">Distance (km)</label>
+    <input type="number" id="distance" placeholder="Enter distance">
+    <label for="fuel">Fuel Type</label>
+    <select id="fuel">
+      <option value="petrol">Petrol</option>
+      <option value="diesel">Diesel</option>
+      <option value="electric">Electric</option>
+    </select>
+    <button onclick="calculateFootprint()">Calculate</button>
+    <div class="result" id="result"></div>
+    <div class="tips" id="tips"></div>
+  </div>
+  <footer>Free tool by MiniAgents.app</footer>
+  <script>
+    const emissionsFactors = {
+      car: { petrol: 0.2, diesel: 0.24, electric: 0.05 },
+      bus: { petrol: 0.1, diesel: 0.12, electric: 0.03 },
+      train: { petrol: 0.06, diesel: 0.08, electric: 0.02 },
+      plane: { petrol: 0.25, diesel: 0.28, electric: 0.1 }
+    };
+
+    const tips = {
+      car: "Consider carpooling or switching to an electric vehicle.",
+      bus: "Use public transport more often to reduce emissions.",
+      train: "Trains are one of the most eco-friendly travel options.",
+      plane: "Offset your flight emissions by supporting carbon reduction projects."
+    };
+
+    function calculateFootprint() {
+      const transport = document.getElementById('transport').value;
+      const distance = parseFloat(document.getElementById('distance').value);
+      const fuel = document.getElementById('fuel').value;
+
+      if (isNaN(distance) || distance <= 0) {
+        alert("Please enter a valid distance.");
+        return;
+      }
+
+      const emissions = emissionsFactors[transport][fuel] * distance;
+      document.getElementById('result').innerHTML = `Estimated Carbon Footprint: ${emissions.toFixed(2)} kg CO₂`;
+
+      document.getElementById('tips').innerHTML = tips[transport];
+    }
+  </script>
+</body>
+</html>
